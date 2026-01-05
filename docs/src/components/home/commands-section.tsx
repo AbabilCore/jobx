@@ -1,6 +1,6 @@
-'use client';
+'use client'
 
-import { Card } from '@/components/ui/card';
+import { Card } from '@/components/ui/card'
 import {
   Table,
   TableBody,
@@ -8,63 +8,83 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
+} from '@/components/ui/table'
+import { CopyButton } from '../code'
+import React from 'react'
 
-const commands = [
+const commandGroups = [
   {
-    name: 'jobx init',
-    description: 'Initialize the project with default configuration',
+    group: 'Init and Test',
+    commands: [
+      {
+        name: 'jobx init',
+        description: 'Initialize the project with default configuration',
+      },
+      {
+        name: 'jobx test',
+        description: 'Run tests on all configuration files',
+      },
+    ],
   },
   {
-    name: 'jobx test',
-    description: 'Run tests on all configuration files',
+    group: 'Generate and Submit',
+    commands: [
+      {
+        name: 'jobx mail generate',
+        description: 'Generate job application emails using AI',
+      },
+      {
+        name: 'jobx mail submit',
+        description: 'Submit generated job application emails',
+      },
+    ],
   },
   {
-    name: 'jobx mail generate',
-    description: 'Generate job application emails using AI',
+    group: 'Reset',
+    commands: [
+      {
+        name: 'jobx reset soft',
+        description: 'Perform a soft reset (keep credentials)',
+      },
+      {
+        name: 'jobx reset hard',
+        description: 'Perform a hard reset (reset everything)',
+      },
+    ],
   },
   {
-    name: 'jobx mail submit',
-    description: 'Submit generated job application emails',
-  },
-
-  {
-    name: 'jobx reset soft',
-    description: 'Perform a soft reset (keep credentials)',
-  },
-  {
-    name: 'jobx reset hard',
-    description: 'Perform a hard reset (reset everything)',
-  },
-  {
-    name: 'jobx sheet find',
-    description: 'Find all job applications with pagination',
-  },
-  {
-    name: 'jobx sheet find -i <id>',
-    description: 'Find job application by specific ID',
-  },
-  {
-    name: 'jobx sheet find -p <page> -l <limit>',
-    description: 'Find jobs with custom page and limit',
-  },
-  {
-    name: 'jobx sheet delete <id>',
-    description: 'Delete job by submitted ID',
+    group: 'Sheet Commands',
+    commands: [
+      {
+        name: 'jobx sheet find',
+        description: 'Find all job applications with pagination',
+      },
+      {
+        name: 'jobx sheet find -i <id>',
+        description: 'Find job application by specific ID',
+      },
+      {
+        name: 'jobx sheet find -p <page> -l <limit>',
+        description: 'Find jobs with custom page and limit',
+      },
+      {
+        name: 'jobx sheet delete <id>',
+        description: 'Delete job by submitted ID',
+      },
+      {
+        name: 'jobx sheet update <id> <field> <value>',
+        description: 'Update submitted job field/value',
+      },
+    ],
   },
   {
-    name: 'jobx sheet update <id> <field> <value>',
-    description: 'Update submitted job field/value',
+    group: 'Miscellaneous',
+    commands: [
+      { name: 'jobx --version', description: 'Output the version number' },
+      { name: 'jobx --help', description: 'Display help for command' },
+    ],
   },
-  {
-    name: 'jobx --version',
-    description: 'Output the version number',
-  },
-  {
-    name: 'jobx --help',
-    description: 'Display help for command',
-  },
-];
+]
 
 const CommandsSection = () => {
   return (
@@ -80,37 +100,47 @@ const CommandsSection = () => {
         </p>
       </div>
 
-      <Card className="border-border/50 overflow-hidden card-hover-glow shadow-xl relative z-10">
-        <Table>
-          <TableHeader>
-            <TableRow className="hover:bg-transparent border-border/50">
-              <TableHead className="font-semibold text-foreground w-[60px] text-center">
-                #
-              </TableHead>
-              <TableHead className="font-semibold text-foreground w-[40%]">
-                Command
-              </TableHead>
-              <TableHead className="font-semibold text-foreground">
-                Description
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {commands.map((cmd, idx) => (
-              <TableRow
-                key={idx.toString()}
-                className="border-border/50 hover:bg-accent/5"
-              >
-                <TableCell className="text-center text-muted-foreground font-medium">
-                  {idx + 1}
-                </TableCell>
-                <TableCell className="font-mono text-accent font-medium">
-                  {cmd.name}
-                </TableCell>
-                <TableCell className="text-muted-foreground">
-                  {cmd.description}
-                </TableCell>
-              </TableRow>
+      <Card className="border-border/50 overflow-hidden card-hover-glow relative z-10 py-0">
+        <Table className='bg-primary-foreground'>
+          <TableBody >
+            {commandGroups.map((group, gIdx) => (
+              <React.Fragment key={gIdx}>
+                {/* Group title row */}
+                <TableRow className="bg-accent/10">
+                  <TableCell
+                    colSpan={4}
+                    className="font-medium text-accent text-center text-lg py-2"
+                  >
+                    {group.group}
+                  </TableCell>
+                </TableRow>
+
+                {/* Header row for the group */}
+                <TableRow className="bg-accent/5">
+                  <TableCell className="font-semibold text-center">#</TableCell>
+                  <TableCell className="font-semibold w-[35%]">Command</TableCell>
+                  <TableCell className="font-semibold">Action</TableCell>
+                  <TableCell className="font-semibold">Description</TableCell>
+                </TableRow>
+
+                {/* Commands */}
+                {group.commands.map((cmd, idx) => (
+                  <TableRow key={idx} className="hover:bg-accent/5">
+                    <TableCell className="text-center text-muted-foreground font-medium">
+                      {idx + 1}
+                    </TableCell>
+                    <TableCell className="font-mono text-accent font-medium">
+                      {cmd.name}
+                    </TableCell>
+                    <TableCell className="font-mono text-accent font-medium">
+                      <CopyButton code={cmd.name} />
+                    </TableCell>
+                    <TableCell className="text-muted-foreground">
+                      {cmd.description}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </React.Fragment>
             ))}
           </TableBody>
         </Table>
@@ -193,7 +223,7 @@ const CommandsSection = () => {
         </Card>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default CommandsSection;
+export default CommandsSection
