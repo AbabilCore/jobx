@@ -1,18 +1,18 @@
-'use client';
+'use client'
 
-import { Check, Copy, Github, Sparkles, Terminal } from 'lucide-react';
-import Image from 'next/image';
-import { useState } from 'react';
-import { Button } from '../ui/button';
+import { Check, Copy, Github, Sparkles, Terminal } from 'lucide-react'
+import Image from 'next/image'
+import { useState } from 'react'
+import { Button } from '../ui/button'
 
 export default function HeroSection() {
-  const [copied, setCopied] = useState(false);
+  const [copied, setCopied] = useState(false)
 
   const copyCommand = () => {
-    navigator.clipboard.writeText('npm install -g jobx');
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
+    navigator.clipboard.writeText('npm install -g jobx')
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 gradient-mesh">
@@ -40,9 +40,8 @@ export default function HeroSection() {
         </h1>
 
         <p className="text-lg md:text-xl text-muted-foreground mb-8 text-balance max-w-2xl mx-auto">
-          JobX is an AI-powered CLI tool that automates job applications,
-          generates personalized emails, and tracks applications using Google
-          Sheets.
+          JobX is an AI-powered CLI tool that automates and personalizes job
+          application emails while tracking all applications in Google Sheets.
         </p>
 
         <div className="mb-8 flex flex-col items-center gap-4">
@@ -121,7 +120,7 @@ export default function HeroSection() {
             onClick={() => {
               document
                 .getElementById('installation')
-                ?.scrollIntoView({ behavior: 'smooth' });
+                ?.scrollIntoView({ behavior: 'smooth' })
             }}
           >
             Get Started
@@ -140,5 +139,5 @@ export default function HeroSection() {
         </div>
       </div>
     </section>
-  );
+  )
 }

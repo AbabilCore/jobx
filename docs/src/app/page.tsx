@@ -6,11 +6,13 @@ import {
   HeroSection,
   InstallationSection,
 } from '@/components';
+import WhyJobXSection from '@/components/home/why-jobx-section';
 
 export default function Home() {
   return (
     <main>
       <HeroSection />
+      <WhyJobXSection />
       <FeaturesSection />
       <InstallationSection />
       <FolderStructureSection />
