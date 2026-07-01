@@ -62,7 +62,7 @@
     "mth-htm": "^1.0.2",
     "nanospinner": "^1.2.2",
     "node-fetch": "^3.3.2",
-    "nodemailer": "^7.0.10",
+    "nodemailer": "^9.0.1",
     "openai": "^6.9.1",
     "rimraf": "^6.0.1",
     "semver": "^7.7.3",
